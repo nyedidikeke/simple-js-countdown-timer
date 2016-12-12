@@ -26,7 +26,7 @@ CountDownTimer.prototype.start = function() {
 
     obj = CountDownTimer.parse(diff);
     that.tickFtns.forEach(function(ftn) {
-      ftn.call(this, obj.minutes, obj.seconds);
+      ftn.call(this, obj.hours, obj.minutes, obj.seconds);
     }, that);
   }());
 };
@@ -42,9 +42,10 @@ CountDownTimer.prototype.expired = function() {
   return !this.running;
 };
 
-CountDownTimer.parse = function(seconds) {
+CountDownTimer.parse = function(countdown) {
   return {
-    'minutes': (seconds / 60) | 0,
-    'seconds': (seconds % 60) | 0
+    'hours': (countdown / 3600) | 0,
+    'minutes': (countdown % 3600 / 60) | 0,
+    'seconds': (countdown % 3600 % 60) | 0
   };
 };
